@@ -5,16 +5,23 @@ test = [[0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,1,1,1,1,1,1,0],
         [0,0,0,0,0,1,0,0,0,0,1,0],
-        [0,0,0,0,0,1,1,1,1,1,1,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,1,0,0,1,1,1,0],
+        [0,0,0,0,0,1,0,0,1,0,0,0],
+        [0,0,0,0,0,1,0,0,1,0,0,0],
+        [0,0,0,0,0,1,1,1,1,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0]]
 
 def printPicture(test):
     for i in test:
         print(i)
     print(f'-----------------------------')
+
+def checkBoundraries(vector, x,y):
+    maxHeight=len(vector)
+    maxWidth=len(vector[0])
+    if ((x < 0) or (x > maxWidth - 1)) or ((y < 0) or (y > maxHeight -1)):
+        return False
+    return True
 
 def fillPolygon(vector,visited, x,y):
     neighbours = [[x-1, y],[x+1, y],[x,y+1],[x,y-1]]
@@ -24,15 +31,16 @@ def fillPolygon(vector,visited, x,y):
             vector[coord[0]][coord[1]] = 1
             visited.append(coord)
         elif coord in visited:
-            return None
+            continue
         elif value == 1:
-            return None
+            continue
+            visited.append(coord)
         fillPolygon(vector, visited, coord[0], coord[1])
 
 
 printPicture(test)
 visited = list()
-fillPolygon(test,visited,3,3)
+fillPolygon(test,visited,5,6)
 printPicture(test)
 
 def assertWrapper(vector, x,y):
